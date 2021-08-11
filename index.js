@@ -1,7 +1,48 @@
+/*
+********
+********
+*NOTE: spacing in backticks (``) is intentional for formatting purposes*
+********
+*******
+*/
+
+
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const markdown = require('./generateMarkdown.js')
+
+// Array of License + Badges Options
+const allLicenses = [
+    {
+        licenseName: 'ISC',
+        hyperlinked_badge: '[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)'
+    },
+    {
+        licenseName: 'MIT',
+        hyperlinked_badge: '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)'
+    },
+    {
+        licenseName: 'Mozilla',
+        hyperlinked_badge: '[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)',
+    },
+    {
+        licenseName: 'Perl',
+        hyperlinked_badge: '[![License: Artistic-2.0](https://img.shields.io/badge/License-Perl-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)',
+    },
+    {
+        licenseName: 'Open Database',
+        hyperlinked_badge: '[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)](https://opendatacommons.org/licenses/odbl/)',
+    },
+    {
+        licenseName: 'Public Domain Dedication and License',
+        hyperlinked_badge: '[![License: ODbL](https://img.shields.io/badge/License-PDDL-brightgreen.svg)](https://opendatacommons.org/licenses/pddl/)',
+    },
+    {
+        licenseName: 'None',
+        hyperlinked_badge: '[![License: ODbL](https://img.shields.io/badge/License-PDDL-brightgreen.svg)](https://opendatacommons.org/licenses/pddl/)',
+    },
+]
+console.log(allLicenses)
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -27,27 +68,16 @@ const questions = [
     },
     {
         type: 'list',
-        message: 'Include any Licenses used',
+        message: 'Include any Licenses used (if not listed, leave blank and hit enter).',
         name: 'license',
         choices: [
-            'Apache 2.0',
-            'Boost Software License 1.0',
-            'BSD 3-Clause',
-            'BSD 2-Clause',
-            'CC0 1.0',
-            'Eclipse Public License 1.0',
-            'GNU GPL v3',
-            'GNU GPL v2',
-            'GNU AGPL v3',
-            'GNU LGPL v3',
-            'GNU FDL v1.3',
-            'IBM Public License 1.0',
-            'ISC License',
+            'ISC',
             'MIT',
             'Mozilla',
             'Perl',
             'Open Database',
             'Public Domain Dedication and License',
+            'None'
         ]
     },
     {
@@ -73,66 +103,88 @@ const questions = [
 ];
 
 // TODO: Create a function to initialize app
-function init() {
-    inquirer
+inquirer
     .prompt(questions)
-        .then((response) => {
-            // ReadMe Template Variable:
-            let readMeFormat =
+    .then((response) => {
+        // ReadMe Template Variable:
+        let readMeFormat =
             `# ${response.projectName}
 
-            ## Table of Contents
-            * [Description](#description)
+## Table of Contents
+* [Description](#description)
 
-            * [Installation](#installation)
+* [Installation](#installation)
 
-            * [Usage](#usage)
+* [Usage](#usage)
 
-            * [Contribution Guidelines](#contribution-guidelines)
+* [Contribution Guidelines](#contribution-guidelines)
 
-            * [Test Instructions](#test-instructions)
+* [Test Instructions](#test-instructions)
 
-            * [Questions](#questions)
+* [Questions](#questions)
 
-            * [License](#license)
+* [License](#license)
 
-            ---
+---
 
-            ## Description
-            ${response.description}
-
-
-            ## Installation
-            Here are some guidelines to help you get started:
-
-            ${response.installation}
+## Description
+${response.description}
 
 
-            ## Usage
-            ${response.usage}
+## Installation
+Here are some guidelines to help you get started:
+
+${response.installation}
 
 
-            ## Contribution Guidelines
-            ${response.contributionGuidelines}
+## Usage
+${response.usage}
 
 
-            ## Test Instructions
-            ${response.tests}
+## Contribution Guidelines
+${response.contributionGuidelines}
 
 
-            ## Questions:
-
-            * Email: ${response.email}
-            * Github: [Github](https://github.com/${username})
+## Test Instructions
+${response.tests}
 
 
-            ## License
+## Questions:
 
-            License: ${response.license}`
-            .then (fs.writeFile('README.md', readMeFormat)
-            )
-        })
-}
+* Email: ${response.email}
+* Github: [Github](https://github.com/${response.username})
 
-// Function call to initialize app
-init();
+
+`
+    // Create ReadMe file
+    fs.writeFile('README.md', readMeFormat, (err) =>
+    err ? console.log('error with generator') : console.log('ReadMe generated!')
+    )
+    
+    let { license } = response
+    
+    // Add License to README.md
+    function renderLicenseBadge(license) {
+        // If a license is selected, add corresponding badge:
+        if (license != 'None'){
+          for (let i = 0; i < allLicenses.length; i++){
+              console.log('**************************')
+              console.log('ENTERING FOR LOOP' + i)
+              console.log('**************************')
+              console.log(license)
+              console.log(allLicenses[i])
+              console.log(allLicenses[i].licenseName)
+            if(license == allLicenses[i].licenseName){
+                console.log('**************************')
+                console.log('APPENDING TO FILE')
+                console.log('**************************')
+              fs.appendFile('README.md', `## License
+${allLicenses[i].hyperlinked_badge}`, (err_badge) =>
+            err_badge ? console.log('error with badge') : console.log('Badge appended')
+              )
+            }
+          }
+        }
+      }
+      renderLicenseBadge(license);
+    })
