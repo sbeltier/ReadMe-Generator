@@ -1,4 +1,4 @@
-## Super Fun Project
+## ReadMe Generator
 
 ---
 
@@ -20,30 +20,32 @@
 ---
 
 ### Description
-This is a super fun project
-
+This project enables the user to quickly create a properly formatted ReadMe with all necessary information.
 
 ### Installation
-No installation required.
+This ReadMe Generator runs on Node.js and uses the npm package Inquirer. To prepare your Node.js environment, open your command-line and type the following:
+1.) type: npm install
+2.) type: npm i inquirer
 
 
 ### Usage
-This project can be used to have more fun in your life.
+After successfully going through Installation, the user must type 'node index.js' in the command-line. The command-line will then ask the user a series of questions to gather information to create the README file. After completing the prompts, a file named README.md will be created.
+
+
+To see this project live, check out my walk-through video [here](https://drive.google.com/file/d/166qT4j2qpr4y_F2oVN6X7Q19g-9TDddl/view?usp=sharing).
 
 
 ### Contribution Guidelines
-No contributions allowed.
-
+Currently, no contributions are allowed.
 
 ### Test Instructions
-NO RUNNING TESTS allowed
-
+N/A
 
 ### Questions:
 
-* Email: sbeltier@superfun.com
+* Email: s.nicole.beltier@gmail.com
 * Github: [https://github.com/sbeltier](https://github.com/sbeltier)
 
 
 ### License
-[![License: Artistic-2.0](https://img.shields.io/badge/License-Perl-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)
+N/A
