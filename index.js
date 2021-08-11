@@ -42,7 +42,7 @@ const allLicenses = [
         hyperlinked_badge: '[![License: ODbL](https://img.shields.io/badge/License-PDDL-brightgreen.svg)](https://opendatacommons.org/licenses/pddl/)',
     },
 ]
-console.log(allLicenses)
+// console.log(allLicenses)
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -68,7 +68,7 @@ const questions = [
     },
     {
         type: 'list',
-        message: 'Include any Licenses used (if not listed, leave blank and hit enter).',
+        message: 'Include licenses used:',
         name: 'license',
         choices: [
             'ISC',
@@ -92,8 +92,8 @@ const questions = [
     },
     {
         type: 'input',
-        message: 'Where can users contact you for questions regarding this project?',
-        name: 'questions',
+        message: 'What email can users contact you for questions regarding this project?',
+        name: 'email',
     },
     {
         type: 'input',
@@ -108,9 +108,11 @@ inquirer
     .then((response) => {
         // ReadMe Template Variable:
         let readMeFormat =
-            `# ${response.projectName}
+            `## ${response.projectName}
 
-## Table of Contents
+---
+
+### Table of Contents
 * [Description](#description)
 
 * [Installation](#installation)
@@ -127,32 +129,30 @@ inquirer
 
 ---
 
-## Description
+### Description
 ${response.description}
 
 
-## Installation
-Here are some guidelines to help you get started:
-
+### Installation
 ${response.installation}
 
 
-## Usage
+### Usage
 ${response.usage}
 
 
-## Contribution Guidelines
+### Contribution Guidelines
 ${response.contributionGuidelines}
 
 
-## Test Instructions
+### Test Instructions
 ${response.tests}
 
 
-## Questions:
+### Questions:
 
 * Email: ${response.email}
-* Github: [Github](https://github.com/${response.username})
+* Github: [https://github.com/${response.username}](https://github.com/${response.username})
 
 
 `
@@ -168,17 +168,17 @@ ${response.tests}
         // If a license is selected, add corresponding badge:
         if (license != 'None'){
           for (let i = 0; i < allLicenses.length; i++){
-              console.log('**************************')
-              console.log('ENTERING FOR LOOP' + i)
-              console.log('**************************')
-              console.log(license)
-              console.log(allLicenses[i])
-              console.log(allLicenses[i].licenseName)
+            //   console.log('**************************')
+            //   console.log('ENTERING FOR LOOP' + i)
+            //   console.log('**************************')
+            //   console.log(license)
+            //   console.log(allLicenses[i])
+            //   console.log(allLicenses[i].licenseName)
             if(license == allLicenses[i].licenseName){
-                console.log('**************************')
-                console.log('APPENDING TO FILE')
-                console.log('**************************')
-              fs.appendFile('README.md', `## License
+                // console.log('**************************')
+                // console.log('APPENDING TO FILE')
+                // console.log('**************************')
+              fs.appendFile('README.md', `### License
 ${allLicenses[i].hyperlinked_badge}`, (err_badge) =>
             err_badge ? console.log('error with badge') : console.log('Badge appended')
               )
