@@ -22,6 +22,8 @@
 ### Description
 This project enables the user to quickly create a properly formatted ReadMe with all necessary information.
 
+(Note: this README utilized the generator!)
+
 ### Installation
 This ReadMe Generator runs on Node.js and uses the npm package Inquirer. To prepare your Node.js environment, open your command-line and type the following:
 1.) type: npm install
